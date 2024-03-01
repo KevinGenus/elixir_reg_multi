@@ -6,7 +6,7 @@ defmodule PracticeWeb.NewRegLive do
   alias Practice.UserProfiles
   alias Practice.UserProfiles.UserProfile
 
-  def render(%{registration_params: registration_params} = assigns) do
+  def render(%{registration_params: _registration_params} = assigns) do
     ~H"""
     <div class="mx-auto max-w-sm">
       <.header class="text-center">
@@ -105,12 +105,12 @@ L
   def handle_event("final_submit", %{"user" => profile_params}, socket) do
       IO.inspect(socket.assigns.registration_params)
       with {:ok, user} <- Accounts.register_user(socket.assigns.registration_params["user"]),
-        {:ok, user_profile} <- UserProfiles.create_user_profile(Map.put(profile_params, :user_id, user.id)) do
+        {:ok, _user_profile} <- UserProfiles.create_user_profile(Map.put(profile_params, "user_id", user.id)) do
           Accounts.deliver_user_confirmation_instructions(
             user,
             &url(~p"/users/confirm/#{&1}")
           )
-        {:noreply, socket |> redirect(~p"/")}
+        {:noreply, socket |> redirect(to: ~p"/")}
 
       else
         {:error, %Ecto.Changeset{} = changeset} ->
