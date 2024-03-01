@@ -15,7 +15,7 @@
     <ul class="relative z-10 flex items-center gap-4 px-4 sm:px-6 lg:px-8 justify-end">
       <%= if @current_user do %>
         <li class="text-[0.8125rem] leading-6 text-zinc-900">
-          <%= @current_user.email %>
+          <%= "#{@current_user.user_profile.first_name} #{@current_user.user_profile.last_name} "%>
         </li>
         <li>
           <.link
@@ -37,7 +37,7 @@
       <% else %>
         <li>
           <.link
-            href={~p"/users/register"}
+            href={~p"/users/test"}
             class="text-[0.8125rem] leading-6 text-zinc-900 font-semibold hover:text-zinc-700"
           >
             Register

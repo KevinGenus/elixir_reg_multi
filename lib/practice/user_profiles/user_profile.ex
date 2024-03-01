@@ -5,7 +5,7 @@ defmodule Practice.UserProfiles.UserProfile do
   schema "user_profiles" do
     field :first_name, :string
     field :last_name, :string
-    field :user_id, :id
+    belongs_to :user, Practice.Accounts.User
 
     timestamps(type: :utc_datetime)
   end

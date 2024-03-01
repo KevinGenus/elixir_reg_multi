@@ -7,6 +7,7 @@ defmodule Practice.Accounts.User do
     field :password, :string, virtual: true, redact: true
     field :hashed_password, :string, redact: true
     field :confirmed_at, :naive_datetime
+    has_one :user_profile, Practice.UserProfiles.UserProfile
 
     timestamps(type: :utc_datetime)
   end

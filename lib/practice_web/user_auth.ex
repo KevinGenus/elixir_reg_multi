@@ -5,6 +5,7 @@ defmodule PracticeWeb.UserAuth do
   import Phoenix.Controller
 
   alias Practice.Accounts
+  alias Practice.UserProfiles
 
   # Make the remember me cookie valid for 60 days.
   # If you want bump or reduce this value, also change

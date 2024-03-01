@@ -37,6 +37,7 @@ defmodule Practice.UserProfiles do
   """
   def get_user_profile!(id), do: Repo.get!(UserProfile, id)
 
+  def get_user_profile_by_user_id(id), do: Repo.get_by(UserProfile, user_id: id)
   @doc """
   Creates a user_profile.
 

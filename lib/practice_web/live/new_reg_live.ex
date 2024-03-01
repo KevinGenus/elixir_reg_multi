@@ -10,13 +10,9 @@ defmodule PracticeWeb.NewRegLive do
     ~H"""
     <div class="mx-auto max-w-sm">
       <.header class="text-center">
-        Step 2: Register for an account
+        Step 2: User Profile
         <:subtitle>
-          Already registered?
-          <.link navigate={~p"/users/log_in"} class="font-semibold text-brand hover:underline">
-          </.link>
-          Sign in
-          to your account now.
+          Complete your profile 
         </:subtitle>
       </.header>
 
@@ -32,8 +28,8 @@ defmodule PracticeWeb.NewRegLive do
           Oops, something went wrong! Please check the errors below.
         </.error>
 
-        <.input field={@form[:first_name]} type="text" label="Firstname" required />
-        <.input field={@form[:last_name]} type="text" label="Lastname" required />
+        <.input field={@form[:first_name]} type="text" label="First Name" required />
+        <.input field={@form[:last_name]} type="text" label="Last Name" required />
 
         <:actions>
           <.button phx-disable-with="Creating account..." class="w-full">Create an account</.button>
@@ -103,20 +99,19 @@ L
   end
 
   def handle_event("final_submit", %{"user" => profile_params}, socket) do
-      IO.inspect(socket.assigns.registration_params)
       with {:ok, user} <- Accounts.register_user(socket.assigns.registration_params["user"]),
         {:ok, _user_profile} <- UserProfiles.create_user_profile(Map.put(profile_params, "user_id", user.id)) do
-          Accounts.deliver_user_confirmation_instructions(
-            user,
-            &url(~p"/users/confirm/#{&1}")
-          )
+        #Accounts.deliver_user_confirmation_instructions(
+        #  user,
+        #  &url(~p"/users/confirm/#{&1}")
+        #)
         {:noreply, socket |> redirect(to: ~p"/")}
 
       else
         {:error, %Ecto.Changeset{} = changeset} ->
           IO.inspect(changeset)
           {:noreply, socket |> assign(check_errors: true) |> assign_form(changeset)}
-    end
+      end
   end
 
   defp assign_form(socket, %Ecto.Changeset{} = changeset) do
